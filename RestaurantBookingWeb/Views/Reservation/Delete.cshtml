@@ -1,0 +1,52 @@
+﻿@model Reservation
+
+@{
+    ViewData["Title"] = "Cancel Reservation";
+}
+
+<form method="post" asp-action="Delete">
+
+<div class="border p-3 mt-4 row">
+    <div class="row pb-2">
+        <h2 class="text-primary">Cancel Reservation</h2>
+        <hr />
+    </div>
+    <div asp-validation-summary="All"></div>
+    <input asp-for="Id" hidden />
+    <input asp-for="TableNumber" hidden />
+    <div class="mb-3">
+        <label asp-for="GuestName"></label>
+        <input asp-for="GuestName" class="form-control" disabled />
+        <span asp-validation-for="GuestName" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="GuestPhone"></label>
+        <input asp-for="GuestPhone" rows="3" class="form-control" disabled></input>
+        <span asp-validation-for="GuestPhone" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3 col-6">
+        <label asp-for="ReservationTime"></label>
+        <input type="text" class="form-control" disabled value="@(Model.ReservationTime.ToString("dd/MM/yyyy HH:mm tt"))"/ >
+        <span asp-validation-for="ReservationTime" class="text-danger"></span>
+    </div>
+    <div class="mb-3 col-6">
+        <label asp-for="DurationMinute"></label>
+        <input asp-for="DurationMinute" class="form-control" disabled />
+        <span asp-validation-for="DurationMinute" class="text-danger"></span>
+    </div>
+    
+    <div class="mb-3 col-12">
+
+        <button type="submit" class="btn btn-danger" style="width:150px">Cancel</button>
+        <a asp-controller="Reservation" asp-action="Index" class="btn btn-secondary" style="width:150px">Back to List</a>
+    </div>
+</div>
+
+</form>
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+
+}

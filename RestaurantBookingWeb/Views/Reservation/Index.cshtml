@@ -1,0 +1,85 @@
+﻿
+@model IEnumerable<Reservation>
+@{
+    ViewData["Title"] = "Reservation List";
+}
+
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Reservation List</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a class="btn btn-primary" asp-controller="Reservation" asp-action="Upsert">
+               <i class="bi bi-plus-circle"></i> &nbsp; New Reservation
+            </a>
+            <a class="btn btn-primary" asp-controller="Search" asp-action="Index">
+               <i class="bi bi-search"></i> &nbsp; Search
+            </a>
+
+        </div>
+    </div>
+    <br />
+    <br />
+
+<table id="tblData" class="table table-bordered table-striped" style="width:100%">
+    <thead>
+        <tr>
+            <th>
+                Reservation Date/Time
+            </th>
+            <th>
+                Table Number
+            </th>
+            <th>
+                Guest Name
+            </th>
+            <th>
+                Guest Phone
+            </th>
+            <th>
+                Duration
+            </th>
+            <th>
+                
+            </th>
+        </tr>
+    </thead>
+    
+    <tbody>
+            @foreach(Reservation r in Model)
+            {
+                <tr>
+                    <td>
+                        @r.ReservationTime.ToString("dd/MM/yyyy HH:mm tt")
+                    </td>
+                    <td>
+                        @r.TableNumber
+                    </td>
+                    <td>
+                        @r.GuestName
+                    </td>
+                    <td>
+                        @r.GuestPhone
+                    </td>
+                    <td>
+                        @r.DurationMinute Mins
+                    </td>
+                    <td>
+                        <div class="w-75 btn-group text-center" role="group">
+                        <a asp-controller="Reservation" asp-action="Upsert" asp-route-id="@r.Id" class="btn btn-primary mx-2">
+                            <i class="bi bi-pencil-square"></i> Change
+                        </a> 
+                        <a asp-controller="Reservation" asp-action="Delete" asp-route-id="@r.Id" class="btn btn-danger mx-2">
+                            <i class="bi bi-trash-fill"></i> Cancel
+                        </a> 
+                    </div>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+</table>
+</div>
+

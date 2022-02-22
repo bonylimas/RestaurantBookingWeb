@@ -1,0 +1,102 @@
+﻿
+@model SearchReservationVM
+@{
+    ViewData["Title"] = "Search Reservation";
+}
+
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Search Reservation</h2>
+        </div>
+    </div>
+    <form method="post" asp-controller="Search" asp-action="Index">
+    <div class="row pt-4">
+        
+        <div class="col-6">
+            <label asp-for="PhoneNumber"></label>
+            <input asp-for="PhoneNumber" class="form-control" /> 
+            <button type="submit" class="btn btn-primary" style="width:150px"><i class="bi bi-search"></i>&nbsp;Search</button>
+         </div>
+         <div class="col-6">
+             <input type="checkbox" asp-for="SearchDate" id="SearchDate" name="SearchDate" class="d-none"/>
+             <label asp-for="DateFilter"></label>
+             <input asp-for="DateFilter" class="form-control" />
+             <button type="submit" onclick="$('#SearchDate').prop('checked', true);" class="btn btn-primary" style="width:150px"><i class="bi bi-search"></i>&nbsp; Search</button>
+        </div>
+        
+     </div>
+     </form>
+    <br />
+    <br />
+
+<table id="tblData" class="table table-bordered table-striped" style="width:100%">
+    <thead>
+        <tr>
+            <th>
+                Reservation Date/Time
+            </th>
+            <th>
+                Table Number
+            </th>
+            <th>
+                Guest Name
+            </th>
+            <th>
+                Guest Phone
+            </th>
+            <th>
+                Duration
+            </th>
+            <th>
+                
+            </th>
+        </tr>
+    </thead>
+    
+    <tbody>
+            @if (Model.SearchResult != null)
+                foreach(Reservation r in Model.SearchResult)
+                {
+                    <tr>
+                        <td>
+                            @r.ReservationTime.ToString("dd/MM/yyyy HH:mm tt")
+                        </td>
+                        <td>
+                            @r.TableNumber
+                        </td>
+                        <td>
+                            @r.GuestName
+                        </td>
+                        <td>
+                            @r.GuestPhone
+                        </td>
+                        <td>
+                            @r.DurationMinute Mins
+                        </td>
+                        <td>
+                            <div class="w-75 btn-group text-center" role="group">
+                            <a asp-controller="Reservation" asp-action="Upsert" asp-route-id="@r.Id" class="btn btn-primary mx-2">
+                                <i class="bi bi-pencil-square"></i> Change
+                            </a> 
+                            <a asp-controller="Reservation" asp-action="Delete" asp-route-id="@r.Id" class="btn btn-danger mx-2">
+                                <i class="bi bi-trash-fill"></i> Cancel
+                            </a> 
+                        </div>
+                        </td>
+
+                        </tr>
+                    }
+                else
+                {
+                    <tr>
+                        <td colspan="6">
+                            No Result Found
+                        </td>
+                    </tr>
+                }
+        </tbody>
+</table>
+</div>
+
